@@ -1,0 +1,28 @@
+<div class="flex flex-col items-center my-5">
+    <ng-otp-input
+        (onInputChange)="handleWaiterCode($event)"
+        #otpInput
+        (keyup.enter)="findWaiter(waiterCode)"
+        [config]="{
+            length: 6,
+            inputClass: 'otp-input !border-2 caret-transparent !w-full max-w-[50px] !h-full max-h-[50px] !text-xl',
+            containerClass: 'flex items-center justify-center',
+            allowNumbersOnly: true,
+        }"
+    />
+
+    <button
+        [disabled]="waiterCode.length < 6 || this.waiterService.isLoading()"
+        (click)="findWaiter(waiterCode)"
+        class="button button__primary w-full mt-4"
+        type="submit"
+    >
+        @if (this.waiterService.isLoading()) {
+        <lucide-icon name="loader2" class="animate-spin"></lucide-icon>
+        } Caută lucrătorul
+    </button>
+
+    @if (waiterCode.length > 0) {
+    <button (click)="resetWaiterCode()" type="button" class="button button__outline w-full mt-2">Resetează</button>
+    }
+</div>

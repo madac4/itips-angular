@@ -1,1 +1,126 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 20 30% 100%;
+        --foreground: 20 14.3% 4.1%;
+
+        --card: 0 0% 100%;
+        --card-foreground: 20 14.3% 4.1%;
+
+        --popover: 0 0% 100%;
+        --popover-foreground: 20 14.3% 4.1%;
+
+        --primary: 13 100% 55%;
+        --primary-foreground: 60 9.1% 97.8%;
+
+        --secondary: 60 4.8% 95.9%;
+        --secondary-foreground: 24 9.8% 10%;
+
+        --muted: 60 4.8% 95.9%;
+        --muted-foreground: 25 5.3% 44.7%;
+
+        --accent: 60 4.8% 95.9%;
+        --accent-foreground: 24 9.8% 10%;
+
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 60 9.1% 97.8%;
+
+        --border: 20 5.9% 90%;
+        --input: 20 5.9% 90%;
+        --ring: 20 14.3% 4.1%;
+
+        --radius: 0.5rem;
+    }
+
+    .dark {
+        --background: 240 14% 15%;
+        /* --background: 20 14.3% 4.1%; */
+        --foreground: 60 9.1% 97.8%;
+
+        --card: 240, 23%, 10%;
+        /* --card: 20 14.3% 4.1%; */
+        --card-foreground: 60 9.1% 97.8%;
+
+        --popover: 20 14.3% 4.1%;
+        --popover-foreground: 60 9.1% 97.8%;
+
+        --primary: 60 9.1% 97.8%;
+        /* --primary-foreground: 24 9.8% 10%; */
+        --primary-foreground: 0 0% 100%;
+
+        --secondary: 12 6.5% 15.1%;
+        --secondary-foreground: 60 9.1% 97.8%;
+
+        --muted: 12 6.5% 15.1%;
+        --muted-foreground: 24 5.4% 63.9%;
+
+        --accent: 12 6.5% 15.1%;
+        --accent-foreground: 60 9.1% 97.8%;
+
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 60 9.1% 97.8%;
+
+        --border: 12 6.5% 15.1%;
+        --input: 12 6.5% 15.1%;
+        --ring: 13 100% 55%;
+    }
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+@layer components {
+    .not-found {
+        @apply bg-gradient-to-b from-gray-800 dark:from-white to-transparent bg-clip-text text-7xl xs:text-8xl sm:text-9xl font-extrabold text-transparent mb-6;
+    }
+    .button {
+        @apply inline-flex gap-2 items-center justify-center whitespace-nowrap text-md font-medium transition-colors duration-300 disabled:pointer-events-none disabled:opacity-50 h-12 rounded-md px-8;
+        &__primary {
+            @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary-600;
+        }
+        &__secondary {
+            @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground;
+        }
+        &__outline {
+            @apply ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground  dark:bg-transparent dark:border-gray-500;
+        }
+    }
+
+    .card {
+        @apply rounded-lg space-y-6 border bg-card text-card-foreground shadow-sm fixed top-[10%] left-1/2 -translate-x-1/2 md:-translate-y-1/2 md:top-1/2 p-6;
+        &__header {
+            @apply flex flex-col items-center gap-2;
+        }
+        &__footer {
+            @apply flex items-center flex-col mt-6;
+        }
+    }
+
+    .otp-input {
+        @apply rounded-md bg-background px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 xs:text-2xl transition focus-visible:ring-primary;
+    }
+}
+
+main {
+    background-image: url('assets//images/noise-light.png');
+}
+
+@font-face {
+    font-family: 'Onest';
+    src: url('assets/fonts/Onest.ttf') format('truetype');
+    font-style: normal;
+}
+
+body {
+    font-family: 'Onest', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
