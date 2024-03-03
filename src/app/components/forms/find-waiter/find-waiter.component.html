@@ -5,7 +5,7 @@
         (keyup.enter)="findWaiter(waiterCode)"
         [config]="{
             length: 6,
-            inputClass: 'otp-input !border-2 caret-transparent !w-full max-w-[50px] !h-full max-h-[50px] !text-xl xs:!text-2xl',
+            inputClass: 'input otp-input !border-2 caret-transparent !w-full max-w-[50px] !h-full max-h-[50px] !text-xl xs:!text-2xl',
             containerClass: 'flex items-center justify-center',
             allowNumbersOnly: true,
         }"
@@ -19,10 +19,19 @@
     >
         @if (this.waiterService.isLoading()) {
         <lucide-icon name="loader2" class="animate-spin"></lucide-icon>
+        }@else{
+        {{ this.otpInput.otpForm.enable() }}
         } Caută lucrătorul
     </button>
 
     @if (waiterCode.length > 0) {
-    <button (click)="resetWaiterCode()" type="button" class="button button__outline w-full mt-2">Resetează</button>
+    <button
+        [disabled]="this.waiterService.isLoading()"
+        (click)="resetWaiterCode()"
+        type="button"
+        class="button button__outline w-full mt-2"
+    >
+        Resetează
+    </button>
     }
 </div>

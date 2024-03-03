@@ -5,8 +5,32 @@ export interface IWaiterResponse {
 }
 
 export type Waiter = {
-    _id: string;
+    avatar: string;
+    email: string;
+    id: string;
     name: string;
+    qrCode: string;
     role: string;
-    venueId: string;
+    userCode: number;
+    target: Target;
+};
+
+export type Target = {
+    target: string;
+    targetAmount: number;
+    currentAmount: number;
+};
+
+export type ITipRequest = {
+    amount: number;
+    rate: string;
+    review: string;
+    payTax: boolean;
+};
+
+export type ITipResponse = {
+    success: boolean;
+    title: string;
+    message: string;
+    redirectTo: string;
 };

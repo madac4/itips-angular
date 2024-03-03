@@ -1,0 +1,7 @@
+<span class="relative flex shrink-0 overflow-hidden rounded-full w-20 h-20">
+    @if (avatar) {
+    <img class="w-full h-full object-cover object-[50%,30%]" [alt]="waiterName" [src]="avatar" />
+    }@else {
+    <img [alt]="waiterName" [src]="fallback" />
+    }
+</span>

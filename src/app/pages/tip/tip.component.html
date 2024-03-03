@@ -1,17 +1,143 @@
-<div class="card">
+<div class="card max-w-[540px] w-full">
     <app-header title="Introduce datele pentru a achita serviciile" />
 
     <div class="card__body mb-6">
-        <h4 class="text-center text-xl font-semibold mb-2">Pagina este în dezvoltare!</h4>
+        <div class="py-6 border-b-[1px]">
+            <div class="flex justify-between items-center gap-4">
+                <div class="max-w-[90%]">
+                    <div class="text-md text-gray-500">{{ waiter.name }}</div>
+                    <div class="text-lg leading-6 font-semibold max-w-[260px]">{{ waiter.target.target }}</div>
+                </div>
+                <app-avatar [avatar]="waiter.avatar" [waiterName]="waiter.name" />
+            </div>
+        </div>
 
-        <ul class="text-center mb-6">
-            <li>{{ waiter._id }}</li>
-            <li>{{ waiter.name }}</li>
-            <li>{{ waiter.role }}</li>
-        </ul>
+        <div class="py-6 border-b-[1px]">
+            <span class="text-md mb-1 block">
+                <strong>{{ waiter.target.currentAmount | number }} MDL</strong> din
+                <strong>{{ waiter.target.targetAmount | number }} MDL</strong>
+            </span>
+            <div
+                aria-valuemax="100"
+                aria-valuemin="0"
+                role="progressbar"
+                data-state="indeterminate"
+                data-max="100"
+                class="relative w-full overflow-hidden rounded-full h-2 bg-gray-200 dark:bg-gray-600"
+            >
+                <div
+                    data-state="indeterminate"
+                    data-max="100"
+                    class="h-full w-full flex-1 bg-primary rounded-md transition-all"
+                    [ngStyle]="{ transform: 'translateX(calc(-100% + ' + amountPercentage + '%))' }"
+                ></div>
+            </div>
+        </div>
 
-        <a routerLink="/sadhigae43ig" class="button button__outline w-full">404 Page</a>
-        <a routerLink="/success" class="button button__outline w-full mt-2">Success Page (în dezvoltare)</a>
+        <div class="py-6 border-b-[1px] relative">
+            <strong class="block mb-2 font-semibold">Bacșiș: {{ selectedTipAmount() | number }} MDL</strong>
+            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                @for (tip of tipsVariants; track tip.amount) {
+                <button
+                    class="button button__tip"
+                    [disabled]="this.waiterService.isLoading()"
+                    [class.selected]="selectedTipAmount() === tip.amount"
+                    (click)="selectedTipAmount.set(tip.amount)"
+                >
+                    {{ tip.label }}
+                </button>
+                }
+
+                <button
+                    [class.selected]="
+                        selectedTipAmount() !== 20 &&
+                        selectedTipAmount() !== 50 &&
+                        selectedTipAmount() !== 100 &&
+                        selectedTipAmount() !== 200
+                    "
+                    class="button button__tip col-span-2"
+                    [disabled]="this.waiterService.isLoading()"
+                    (click)="openCustomTip.set(true)"
+                >
+                    Altă sumă
+                    <lucide-icon name="arrow-right" size="20" />
+                </button>
+            </div>
+
+            @if (openCustomTip()) {
+            {{ customTip.focus() }}
+            <div class="flex gap-2 items-center transition-all absolute w-full bottom-6 bg-white dark:bg-card">
+                <button
+                    (click)="openCustomTip.set(false)"
+                    class="button button__icon hover:bg-accent hover:text-accent-foreground"
+                >
+                    <lucide-icon name="arrow-left" />
+                </button>
+
+                <div class="relative flex-1">
+                    <input
+                        #customTip
+                        (keyup.enter)="setTipValue(customTip.value)"
+                        (input)="formatInput($event)"
+                        class="input custom-input"
+                        placeholder="0 MDL"
+                        maxlength="6"
+                        value="{{ customTip.value }}"
+                    />
+                    <lucide-icon
+                        (click)="customTip.value = ''"
+                        class="absolute top-1/2 cursor-pointer text-gray-400 right-2 -translate-y-1/2"
+                        name="delete"
+                    />
+                </div>
+
+                <button
+                    (click)="setTipValue(customTip.value)"
+                    class="button button__icon hover:bg-green-500 hover:border-green-500 group"
+                >
+                    <lucide-icon class="group-hover:text-white" name="check" />
+                </button>
+            </div>
+            }
+        </div>
+
+        <div class="py-6 border-b-[1px]">
+            <strong class="block mb-2 font-semibold">Rate the service</strong>
+            <div class="flex gap-2 mb-6 flex-wrap">
+                @for (rate of rates; track rate.value) {
+                <button
+                    (click)="selectedRate.set(rate.value)"
+                    [disabled]="this.waiterService.isLoading()"
+                    class="button button__icon button__rate"
+                    [class.selected]="selectedRate() === rate.value"
+                >
+                    <img alt="bad" loading="lazy" [src]="rate.icon" class="w-8 h-8" />
+                    {{ rate.label }}
+                </button>
+                }
+            </div>
+
+            <strong class="block mb-2 font-semibold">What can be improved?</strong>
+            <textarea
+                [disabled]="this.waiterService.isLoading()"
+                (input)="handleReviewChange($event)"
+                class="input textarea"
+                placeholder="Scrie comentariul tau..."
+                maxlength="300"
+            ></textarea>
+        </div>
+
+        <button
+            (click)="sendTip()"
+            class="button button__primary w-full mt-4"
+            [disabled]="this.waiterService.isLoading()"
+        >
+            @if (this.waiterService.isLoading()) {
+            <lucide-icon name="loader2" class="animate-spin" />
+            }@else{
+            <lucide-icon name="credit-card" />
+            } Achită cu cardul
+        </button>
     </div>
 
     <app-footer />

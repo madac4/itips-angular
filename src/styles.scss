@@ -74,6 +74,13 @@
     body {
         @apply bg-background text-foreground;
     }
+    @layer base {
+        input[type='number']::-webkit-inner-spin-button,
+        input[type='number']::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
 }
 
 @layer components {
@@ -81,20 +88,32 @@
         @apply bg-gradient-to-b from-gray-800 dark:from-white to-transparent bg-clip-text text-7xl xs:text-8xl sm:text-9xl font-extrabold text-transparent mb-6;
     }
     .button {
-        @apply inline-flex gap-2 items-center justify-center whitespace-nowrap text-md font-medium transition-colors duration-300 disabled:pointer-events-none disabled:opacity-50 h-12 rounded-md px-8;
+        @apply inline-flex gap-2 items-center justify-center focus-visible:outline-none whitespace-nowrap text-md font-medium transition-colors duration-300 disabled:pointer-events-none disabled:opacity-50 h-12 rounded-md px-8;
         &__primary {
-            @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary-600;
+            @apply focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary-600;
         }
         &__secondary {
-            @apply focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground;
+            @apply focus-visible:ring-1 focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground;
         }
         &__outline {
-            @apply ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground  dark:bg-transparent dark:border-gray-500;
+            @apply ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground  dark:bg-transparent dark:border-gray-500;
+        }
+        &__tip {
+            @apply text-sm ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-background hover:text-accent-foreground border font-semibold p-4 h-fit hover:border-primary-300 hover:bg-primary-100 dark:hover:bg-primary-950;
+        }
+        &__icon {
+            @apply text-sm ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background p-4 w-fit h-fit;
+        }
+        &__rate {
+            @apply hover:text-accent-foreground h-11 px-8 flex-1 flex gap-2 py-6 hover:border-primary-300 hover:bg-primary-100 dark:hover:bg-primary-950 text-md;
+        }
+        &.selected {
+            @apply bg-primary border-primary text-white hover:bg-primary hover:border-primary hover:text-white;
         }
     }
 
     .card {
-        @apply rounded-lg space-y-6 border bg-card text-card-foreground shadow-sm fixed top-[10%] left-1/2 -translate-x-1/2 md:-translate-y-1/2 md:top-1/2 p-6;
+        @apply rounded-lg space-y-6 border bg-card text-card-foreground shadow-sm p-6;
         &__header {
             @apply flex flex-col items-center gap-2;
         }
@@ -103,8 +122,19 @@
         }
     }
 
-    .otp-input {
-        @apply rounded-md bg-background px-3 py-2 ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition focus-visible:ring-primary;
+    .input {
+        @apply rounded-md bg-background ring-offset-background transition placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+        &.otp-input {
+            @apply px-3 py-2 focus-visible:ring-primary;
+        }
+
+        &.custom-input {
+            @apply w-full border border-input p-4 h-fit font-semibold text-md focus-visible:ring-transparent focus-visible:border-primary;
+        }
+
+        &.textarea {
+            @apply min-h-[80px] w-full border border-input px-3 py-2 focus-visible:ring-transparent focus-visible:border-primary h-[130px] text-md resize-none;
+        }
     }
 }
 

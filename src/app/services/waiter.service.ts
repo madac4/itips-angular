@@ -3,8 +3,8 @@ import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs';
 import { API_URL } from '../constants/app.config';
-import { HotToastService } from '@ngxpert/hot-toast';
-import { IWaiterResponse } from '../types/waiter.types';
+import { ITipRequest, ITipResponse, IWaiterResponse } from '../types/waiter.types';
+import { StatusService } from './status.service';
 
 @Injectable({
     providedIn: 'root',
@@ -15,7 +15,7 @@ export class WaiterService {
     constructor(
         private readonly http: HttpClient,
         private readonly router: Router,
-        private readonly toast: HotToastService
+        private readonly status: StatusService
     ) {}
 
     findWaiter(userCode: string) {
@@ -29,13 +29,13 @@ export class WaiterService {
                         localStorage.setItem('waiter', JSON.stringify(response.user));
                         this.router.navigate([response.redirectTo]);
                     } else {
-                        this.showToast('Codul introdus nu este valid.');
+                        this.status.error('Codul introdus nu este valid.');
                     }
                 }),
 
                 catchError((error) => {
                     const message = error.error.message || 'A apărut o eroare. Vă rugăm să încercați din nou.';
-                    this.showToast(message);
+                    this.status.warning(message);
                     this.isLoading.set(false);
                     return error;
                 })
@@ -43,7 +43,31 @@ export class WaiterService {
             .subscribe();
     }
 
-    showToast(message: string) {
-        this.toast.error(message);
+    createTransaction(waiterCode: string, data: ITipRequest) {
+        this.isLoading.set(true);
+        return this.http
+            .post<ITipResponse>(`${API_URL}/pay/${waiterCode}`, data)
+            .pipe(
+                tap((response: ITipResponse) => {
+                    if (response.success) {
+                        this.isLoading.set(false);
+                        localStorage.setItem(
+                            'success',
+                            JSON.stringify({ title: response.title, message: response.message })
+                        );
+                        this.router.navigate([response.redirectTo]);
+                    } else {
+                        this.isLoading.set(false);
+                        this.status.error('A apărut o eroare. Vă rugăm să încercați din nou.');
+                    }
+                }),
+                catchError((error) => {
+                    const message = error.error.message || 'A apărut o eroare. Vă rugăm să încercați din nou.';
+                    this.status.warning(message);
+                    this.isLoading.set(false);
+                    return error;
+                })
+            )
+            .subscribe();
     }
 }

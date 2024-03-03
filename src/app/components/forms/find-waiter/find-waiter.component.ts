@@ -22,6 +22,7 @@ export class FindWaiterComponent {
     }
 
     findWaiter(code: string) {
+        this.codeInput.otpForm.disable();
         this.waiterService.findWaiter(code);
     }
 

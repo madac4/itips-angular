@@ -1,3 +1,16 @@
-<h1 class="not-found text-center pt-14">Success</h1>
+<div class="card max-w-[480px]">
+    <app-header title="Vă mulțumim pentru bacșiș!" />
 
-<button (click)="goBack()" class="button button__outline mx-auto block mt-14">Mergi Înapoi</button>
+    <div class="p-4 pt-0">
+        <div class="py-6 border-b-[1px] flex flex-col justify-center items-center">
+            <img alt="success" src="assets/images/success.svg" />
+            <h2 class="text-center text-2xl font-semibold mb-3">{{ title }}</h2>
+            <p class="text-center">
+                {{ message }}
+            </p>
+            <a routerLink="" class="button button__primary max-w-[280px] w-full mt-5">Înapoi la căutare</a>
+        </div>
+    </div>
+
+    <app-footer />
+</div>
