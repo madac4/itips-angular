@@ -6,7 +6,7 @@
             <div class="flex justify-between items-center gap-4">
                 <div class="max-w-[90%]">
                     <div class="text-md text-gray-500">{{ waiter.name }}</div>
-                    <div class="text-lg leading-6 font-semibold max-w-[260px]">{{ waiter.target.target }}</div>
+                    <div class="text-lg leading-6 font-medium max-w-[260px]">{{ waiter.target.target }}</div>
                 </div>
                 <app-avatar [avatar]="waiter.avatar" [waiterName]="waiter.name" />
             </div>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="py-6 border-b-[1px] relative">
-            <strong class="block mb-2 font-semibold">Bacșiș: {{ selectedTipAmount() | number }} MDL</strong>
+            <strong class="block mb-2 font-medium">Bacșiș: {{ selectedTipAmount() | number }} MDL</strong>
             <div class="grid grid-cols-3 sm:grid-cols-6 gap-2">
                 @for (tip of tipsVariants; track tip.amount) {
                 <button
@@ -102,7 +102,7 @@
         </div>
 
         <div class="py-6 border-b-[1px]">
-            <strong class="block mb-2 font-semibold">Rate the service</strong>
+            <strong class="block mb-2 font-medium">Rate the service</strong>
             <div class="flex gap-2 mb-6 flex-wrap">
                 @for (rate of rates; track rate.value) {
                 <button
@@ -117,7 +117,7 @@
                 }
             </div>
 
-            <strong class="block mb-2 font-semibold">What can be improved?</strong>
+            <strong class="block mb-2 font-medium">What can be improved?</strong>
             <textarea
                 [disabled]="this.waiterService.isLoading()"
                 (input)="handleReviewChange($event)"

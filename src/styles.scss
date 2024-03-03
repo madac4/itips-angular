@@ -74,12 +74,22 @@
     body {
         @apply bg-background text-foreground;
     }
-    @layer base {
-        input[type='number']::-webkit-inner-spin-button,
-        input[type='number']::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    strong {
+        @apply font-medium;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-semibold;
     }
 }
 
@@ -99,7 +109,7 @@
             @apply ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground  dark:bg-transparent dark:border-gray-500;
         }
         &__tip {
-            @apply text-sm ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-background hover:text-accent-foreground border font-semibold p-4 h-fit hover:border-primary-300 hover:bg-primary-100 dark:hover:bg-primary-950;
+            @apply text-sm ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 bg-background hover:text-accent-foreground border font-medium p-4 h-fit hover:border-primary-300 hover:bg-primary-100 dark:hover:bg-primary-950;
         }
         &__icon {
             @apply text-sm ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border border-input bg-background p-4 w-fit h-fit;
@@ -129,7 +139,7 @@
         }
 
         &.custom-input {
-            @apply w-full border border-input p-4 h-fit font-semibold text-md focus-visible:ring-transparent focus-visible:border-primary;
+            @apply w-full border border-input p-4 h-fit font-medium text-md focus-visible:ring-transparent focus-visible:border-primary;
         }
 
         &.textarea {
